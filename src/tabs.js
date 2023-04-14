@@ -1,29 +1,15 @@
-import createFilmPage from "./films";
-import createcharactersPage from "./characters";
-import createSWHomePage from "./homePage";
-
+import createFilmPage from './films';
+import createCharactersPage from './characters';
+import createSWHomePage from './homePage';
 
 const createTabs = () => {
-  const content = document.querySelector("#content");
+  const content = document.querySelector('#content');
   const tabsContainer = document.createElement('div');
   tabsContainer.classList.add('tabs-container');
 
-
-  const div1 = document.createElement('div');
-  const div2 = document.createElement('div');
-  const div3 = document.createElement('div');
-
-  div1.setAttribute('id', 'home-btn');
-  div2.setAttribute('id', 'characters-btn');
-  div3.setAttribute('id', 'films-btn');
-
-  div1.classList.add('tab');
-  div2.classList.add('tab');
-  div3.classList.add('tab');
-
-  div1.textContent = 'Home';
-  div2.textContent = 'Characters';
-  div3.textContent = 'Films';
+  const div1 = createTabElement('home-btn', 'Home');
+  const div2 = createTabElement('characters-btn', 'Characters');
+  const div3 = createTabElement('films-btn', 'Films');
 
   tabsContainer.appendChild(div1);
   tabsContainer.appendChild(div2);
@@ -32,22 +18,30 @@ const createTabs = () => {
   content.appendChild(tabsContainer);
 
   div1.addEventListener('click', () => {
-    clearContent(); 
+    clearContent();
     createSWHomePage();
   });
   div2.addEventListener('click', () => {
     clearContent();
-    createcharactersPage();
+    createCharactersPage();
   });
   div3.addEventListener('click', () => {
     clearContent();
     createFilmPage();
   });
+};
+
+function createTabElement(id, textContent) {
+  const div = document.createElement('div');
+  div.setAttribute('id', id);
+  div.classList.add('tab');
+  div.textContent = textContent;
+  return div;
 }
 
 function clearContent() {
-  const content = document.querySelector("#content");
-  const pageContent = document.querySelector('.page-content')
+  const content = document.querySelector('#content');
+  const pageContent = document.querySelector('.page-content');
   if (pageContent) {
     content.removeChild(pageContent);
   }

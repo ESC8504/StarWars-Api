@@ -1,8 +1,8 @@
-import { fetchData } from "./films";
-import { displayFilmDetails } from "./films";
-const PEOPLE_API = "https://swapi.dev/api/people/";
+import { fetchData, displayFilmDetails } from './films';
 
-const createcharactersPage = async () => {
+const PEOPLE_API = 'https://swapi.dev/api/people/';
+
+const createCharactersPage = async () => {
   const content = document.querySelector('#content');
   const pageContent = document.createElement('div');
   pageContent.classList.add('page-content');
@@ -23,30 +23,36 @@ const createcharactersPage = async () => {
 
   const charactersDetailsContainer = document.createElement('div');
   charactersDetailsContainer.classList.add('details-container');
-  pageContent.appendChild(headLine)
+  pageContent.appendChild(headLine);
   pageContent.appendChild(charactersList);
   pageContent.appendChild(charactersDetailsContainer);
   content.appendChild(pageContent);
 
   pageContent.appendChild(charactersList);
-  content.appendChild(pageContent); 
-}
-
-function createCharacter(character) {
-  const item = document.createElement('li');
-  item.textContent = character.name;
-  item.addEventListener('click', () => {
-    clearCharacterList(); 
-    displayCharacterDetails(character);
-  });
-  return item;
-}
+  content.appendChild(pageContent);
+};
 
 function clearCharacterList() {
   const charactersList = document.querySelector('.characters-list');
   if (charactersList) {
     charactersList.remove();
   }
+}
+
+function createCharacter(character) {
+  const item = document.createElement('li');
+  item.textContent = character.name;
+  item.addEventListener('click', () => {
+    clearCharacterList();
+    displayCharacterDetails(character);
+  });
+  return item;
+}
+
+async function fetchFilms(filmsUrls) {
+  const filmPromises = filmsUrls.map(url => fetch(url).then(res => res.json()));
+  const films = await Promise.all(filmPromises);
+  return films;
 }
 
 async function displayCharacterDetails(character) {
@@ -62,7 +68,7 @@ async function displayCharacterDetails(character) {
     filmItem.textContent = film.title;
     filmItem.addEventListener('click', () => {
       const headLine = document.querySelector('.head-line');
-      headLine.textContent = "Star Wars Films";
+      headLine.textContent = 'Star Wars Films';
       displayFilmDetails(film);
     });
     filmsList.appendChild(filmItem);
@@ -75,21 +81,12 @@ async function displayCharacterDetails(character) {
 
   const characterDetails = document.createElement('p');
   characterDetails.textContent = `Height: ${character.height} || Mass: ${character.mass} || Hair color: ${character.hair_color} || Gender: ${character.gender}`;
-  
 
   charactersDetailsContainer.appendChild(peopleName);
   charactersDetailsContainer.appendChild(characterDetails);
   charactersDetailsContainer.appendChild(filmDescript);
   charactersDetailsContainer.appendChild(filmsList);
-  
-  
 }
 
-async function fetchFilms(filmsUrls) {
-  const filmPromises = filmsUrls.map(url => fetch(url).then(res => res.json()));
-  const films = await Promise.all(filmPromises);
-  return films;
-}
-
-export default createcharactersPage;
+export default createCharactersPage;
 export { displayCharacterDetails };

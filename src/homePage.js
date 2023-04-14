@@ -1,14 +1,12 @@
-
-
 const createSWHomePage = () => {
-  const content = document.querySelector("#content");
+  const content = document.querySelector('#content');
   const pageContent = document.createElement('div');
   pageContent.classList.add('page-content');
-  
+
   const darth = document.createElement('img');
   darth.src = './darth.svg';
   darth.classList.add('darth');
-  pageContent.appendChild(darth)
+  pageContent.appendChild(darth);
 
   const headLine = document.createElement('h1');
   headLine.textContent = 'STAR WARS';
@@ -20,8 +18,9 @@ const createSWHomePage = () => {
 
   const mainImage = document.createElement('img');
   mainImage.src = './star-wars.jpeg';
-  pageContent.appendChild(mainImage)
+  pageContent.appendChild(mainImage);
 
-  content.appendChild(pageContent)
-}
+  content.appendChild(pageContent);
+};
+
 export default createSWHomePage;

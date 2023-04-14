@@ -1,5 +1,6 @@
-import { displayCharacterDetails } from "./characters";
-const FILM_API = "https://swapi.dev/api/films/";
+import { displayCharacterDetails } from './characters';
+
+const FILM_API = 'https://swapi.dev/api/films/';
 
 const createFilmPage = async () => {
   const content = document.querySelector('#content');
@@ -25,6 +26,11 @@ const createFilmPage = async () => {
   pageContent.appendChild(filmList);
   pageContent.appendChild(filmDetailsContainer);
   content.appendChild(pageContent);
+};
+
+async function fetchAdditionalPage(url, pgNumber) {
+  const response = await fetch(`${url}?page=${pgNumber}`);
+  return response.json();
 }
 
 async function fetchData(url) {
@@ -40,20 +46,16 @@ async function fetchData(url) {
         additionalPagePromises.push(fetchAdditionalPage(url, i));
       }
       const additionalPages = await Promise.all(additionalPagePromises);
-      for (const additionalPage of additionalPages) {
+      for (let additionalPage of additionalPages) {
         data.results = data.results.concat(additionalPage.results);
       }
     }
     return data;
   } catch (error) {
-    console.error("Error fetching data:", error);
-    document.getElementById("content").innerHTML = "Error loading data.";
+    console.error('Error fetching data:', error);
+    const content = document.querySelector('#content');
+    content.textContent = 'Error loading data.';
   }
-}
-
-async function fetchAdditionalPage(url, pgNumber) {
-  const response = await fetch(`${url}?page=${pgNumber}`);
-  return await response.json();
 }
 
 async function fetchCharacters(characterUrls) {
@@ -62,15 +64,22 @@ async function fetchCharacters(characterUrls) {
   return characters;
 }
 
+function clearFilmList() {
+  const filmList = document.querySelector('.film-list');
+  if (filmList) {
+    filmList.remove();
+  }
+}
+
 function createFilmItem(film) {
   const item = document.createElement('li');
   item.textContent = film.title;
   item.addEventListener('click', () => {
-    clearFilmList(); 
+    clearFilmList();
     displayFilmDetails(film);
   });
   return item;
-};
+}
 
 async function displayFilmDetails(film) {
   const filmDetailsContainer = document.querySelector('.details-container');
@@ -84,7 +93,7 @@ async function displayFilmDetails(film) {
   const characters = await fetchCharacters(film.characters);
   const characterList = document.createElement('ul');
   characterList.classList.add('detail-list');
-  
+
   for (let character of characters) {
     const characterItem = document.createElement('li');
     characterItem.textContent = character.name;
@@ -98,23 +107,12 @@ async function displayFilmDetails(film) {
 
   const filmDetails = document.createElement('p');
   filmDetails.textContent = `Episode: ${film.episode_id} || Director: ${film.director} || Producer: ${film.producer} || Release Date: ${film.release_date}`;
-  
+
   filmDetailsContainer.appendChild(filmTitle);
   filmDetailsContainer.appendChild(filmDetails);
   filmDetailsContainer.appendChild(characterDescript);
   filmDetailsContainer.appendChild(characterList);
 }
 
-function clearFilmList() {
-  const filmList = document.querySelector('.film-list');
-  if (filmList) {
-    filmList.remove();
-  }
-}
-
-
-
 export default createFilmPage;
-export { fetchData };
-export { fetchAdditionalPage };
-export { displayFilmDetails };
+export { fetchData, fetchAdditionalPage, displayFilmDetails };
