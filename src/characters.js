@@ -1,4 +1,5 @@
 import { fetchData } from "./films";
+import { displayFilmDetails } from "./films";
 const PEOPLE_API = "https://swapi.dev/api/people/";
 
 const createcharactersPage = async () => {
@@ -6,6 +7,7 @@ const createcharactersPage = async () => {
   const pageContent = document.createElement('div');
   pageContent.classList.add('page-content');
   const headLine = document.createElement('h2');
+  headLine.classList.add('head-line');
   headLine.textContent = 'Star War Characters';
 
   const characters = await fetchData(PEOPLE_API);
@@ -58,6 +60,11 @@ async function displayCharacterDetails(character) {
   for (let film of films) {
     const filmItem = document.createElement('li');
     filmItem.textContent = film.title;
+    filmItem.addEventListener('click', () => {
+      const headLine = document.querySelector('.head-line');
+      headLine.textContent = "Star Wars Films";
+      displayFilmDetails(film);
+    });
     filmsList.appendChild(filmItem);
   }
 
@@ -85,3 +92,4 @@ async function fetchFilms(filmsUrls) {
 }
 
 export default createcharactersPage;
+export { displayCharacterDetails };

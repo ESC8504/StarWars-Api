@@ -1,4 +1,4 @@
-
+import { displayCharacterDetails } from "./characters";
 const FILM_API = "https://swapi.dev/api/films/";
 
 const createFilmPage = async () => {
@@ -6,6 +6,7 @@ const createFilmPage = async () => {
   const pageContent = document.createElement('div');
   pageContent.classList.add('page-content');
   const headLine = document.createElement('h2');
+  headLine.classList.add('head-line');
   headLine.textContent = 'Star War Films';
 
   const films = await fetchData(FILM_API);
@@ -87,19 +88,21 @@ async function displayFilmDetails(film) {
   for (let character of characters) {
     const characterItem = document.createElement('li');
     characterItem.textContent = character.name;
+    characterItem.addEventListener('click', () => {
+      const headLine = document.querySelector('.head-line');
+      headLine.textContent = 'Star War Characters';
+      displayCharacterDetails(character);
+    });
     characterList.appendChild(characterItem);
   }
 
   const filmDetails = document.createElement('p');
   filmDetails.textContent = `Episode: ${film.episode_id} || Director: ${film.director} || Producer: ${film.producer} || Release Date: ${film.release_date}`;
   
-
   filmDetailsContainer.appendChild(filmTitle);
   filmDetailsContainer.appendChild(filmDetails);
   filmDetailsContainer.appendChild(characterDescript);
   filmDetailsContainer.appendChild(characterList);
-
-  
 }
 
 function clearFilmList() {
@@ -110,6 +113,8 @@ function clearFilmList() {
 }
 
 
+
 export default createFilmPage;
-export {fetchData};
-export {fetchAdditionalPage};
+export { fetchData };
+export { fetchAdditionalPage };
+export { displayFilmDetails };

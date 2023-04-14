@@ -5,10 +5,10 @@ const createSWHomePage = () => {
   const pageContent = document.createElement('div');
   pageContent.classList.add('page-content');
   
-  const freedom = document.createElement('img');
-  freedom.src = './darth.svg';
-  freedom.classList.add('freedom-gundam');
-  pageContent.appendChild(freedom)
+  const darth = document.createElement('img');
+  darth.src = './darth.svg';
+  darth.classList.add('darth');
+  pageContent.appendChild(darth)
 
   const headLine = document.createElement('h1');
   headLine.textContent = 'STAR WARS';
