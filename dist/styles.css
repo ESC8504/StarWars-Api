@@ -1,0 +1,81 @@
+body {
+  background-color: antiquewhite;
+  margin: 0;
+  padding: 0;
+}
+
+.page-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: rgba(61,61,60,0.705);
+  padding: 1rem;
+}
+
+.page-content img {
+  width: 60%;
+  height: auto;
+}
+
+.page-content .darth {
+  width: 100px;
+  margin-bottom: 1rem;
+}
+
+.main-image {
+  width: 70%;
+}
+
+.tabs-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.tabs-container div {
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+  background-color: rgba(253,102,56,0.9);
+  color: white;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  width: 5rem;
+  box-shadow: 0 0.2rem 0.6rem rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tabs-container div:hover {
+  color: #B6D7B6;
+}
+
+.page-content .film-list, .characters-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); 
+  font-size: 25px;
+  gap: 2rem;
+}
+
+.details-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.detail-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 2rem;
+}
+
+.page-content li {
+  list-style: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.page-content li:hover {
+  color:#F09440;
+}
